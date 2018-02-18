@@ -12,7 +12,6 @@ function setup() {
   let dir = 1;
   tiles.push(new Tile(0,0,40,1));
   for (let i = 0; i < cols*rows;i++) {
-    //console.table([x,y]);
     let tile = new Tile(x, y, resolution, i+1);
     tiles.push(tile);
     x= x+(resolution*dir);
@@ -34,16 +33,5 @@ function draw() {
   fill(50);
   for(let tile of tiles) {
     tile.show();
-    // console.log(tile.x);
   }
-  // for(var i = 0; i < width/scl;i++) {
-  //   for (var j = 0; j< height/scl;j++){
-  //     //no commend
-  //     strokeWeight(2);
-  //     rect(i*scl, j*scl, scl, scl);
-  //   }
-  //
-  //
-  // }
-
 }
