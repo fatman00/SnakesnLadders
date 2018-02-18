@@ -1,50 +1,49 @@
-var cols, rows;
-var scl = 20;
-var w = 500;
-var h = 500;
 
-var flying = 0;
-
-var terrain = [];
+let tiles = [];
+let player;
 
 function setup() {
-  createCanvas(500, 500, WEBGL);
-  cols = w/ scl;
-  rows = h/ scl;
-
-  for (var x = 0; x < cols; x++) {
-    terrain[x] = [];
-    for (var y = 0; y < rows; y++) {
-      terrain[x][y] = 0; //specify a default value for now
+  createCanvas(400,400);
+  let resolution = 40;
+  let cols = width / resolution;
+  let rows = height / resolution;
+  let x = 0;
+  let y = (rows-1)*resolution;
+  let dir = 1;
+  tiles.push(new Tile(0,0,40,1));
+  for (let i = 0; i < cols*rows;i++) {
+    //console.table([x,y]);
+    let tile = new Tile(x, y, resolution, i+1);
+    tiles.push(tile);
+    x= x+(resolution*dir);
+    if(x>=width) {
+      x-=resolution;
+      y-=resolution;
+      dir *=-1;
+    }
+    if(x<=-resolution){
+      x=resolution;
+      y-=resolution;
+      dir *=-1;
     }
   }
 }
 
 function draw() {
-
-  flying -= 0.02;
-  var yoff = flying;
-  for (var y = 0; y < rows; y++) {
-    var xoff = 0;
-    for (var x = 0; x < cols; x++) {
-      terrain[x][y] = map(noise(xoff, yoff), 0, 1, -100, 100);
-      xoff += 0.1;
-    }
-    yoff += 0.1;
+  background(51);
+  fill(50);
+  for(let tile of tiles) {
+    tile.show();
+    // console.log(tile.x);
   }
+  // for(var i = 0; i < width/scl;i++) {
+  //   for (var j = 0; j< height/scl;j++){
+  //     //no commend
+  //     strokeWeight(2);
+  //     rect(i*scl, j*scl, scl, scl);
+  //   }
+  //
+  //
+  // }
 
-
-  background(10, -15, 75, -100);
-  translate(0, 50);
-  rotateX(PI/3);
-  fill(969, 90, 10, 70);
-  translate(-w/2, -h/2);
-  for (var y = 0; y < rows-1; y++) {
-    beginShape(TRIANGLE_STRIP);
-    for (var x = 0; x < cols; x++) {
-      vertex(x*scl, y*scl, terrain[x][y]);
-      vertex(x*scl, (y+0.9)*scl, terrain[x][y+ 56, 68, 34]);
-    }
-    endShape();
-  }
 }
